@@ -13,7 +13,13 @@
 
         //creating scene
         var scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x000000);
+        scene.background = new THREE.Color(0x003450); //el color se puede poner en hexadecimal  0x- ,rgb  =("rgb (34,45,32)") ,numeros de 0 a 1 , ("black- red " )
+        scene.fog = new THREE.Fog(0x003450,0.1,8);
+var loader = new THREE.TextureLoader();
+loader.load("./bg.jpg", function (texture) {
+    scene.background= texture;
+})
+
 
         //add camera
         var camera = new THREE.PerspectiveCamera(
@@ -28,7 +34,9 @@
 
         //add geometry
         var geometry = new THREE.TorusKnotGeometry();
-        var material = new THREE.MeshBasicMaterial({color: 	0xF8D91D, wireframe: true});
+        var material = new THREE.MeshBasicMaterial({color: 	0xF8D91D, 
+           // wireframe: true
+        });
         var cube = new THREE.Mesh(geometry, material);
 
         scene.add(cube);
