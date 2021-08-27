@@ -7,9 +7,14 @@
 </head>
 <body>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
 
-    <script>
+    <script type="module">
+ 
+
+        import * as  THREE from "./three.module.js";
+
+import {OrbitControls} from './OrbitControls.js';
 
         //creating scene
         var scene = new THREE.Scene();
@@ -27,51 +32,86 @@
             window.innerWidth/window.innerHeight,0.1,2000
         );
 
-        var newcamera = new THREE.PerspectiveCamera(
-          75,
-            window.innerWidth/window.innerHeight,2.1,100
-        );
-        var helper = new THREE.CameraHelper(newcamera); 
+        // var newcamera = new THREE.PerspectiveCamera(
+        //   75,
+        //     window.innerWidth/window.innerHeight,2.1,100
+        // );
+        // var helper = new THREE.CameraHelper(newcamera); 
 
-        scene.add(helper);
+        // scene.add(helper);
 
-        //renderer
+        
+        
+        
+    //renderer
         var renderer = new THREE.WebGLRenderer();
+        
         renderer.setSize(window.innerWidth, window.innerHeight);
+        
         document.body.appendChild(renderer.domElement);
 
         //add geometry
+        
         var geometry = new THREE.TorusKnotGeometry();
+        
         var material = new THREE.MeshBasicMaterial({color: 	0xF8D91D, 
-           wireframe: true
+        
+            wireframe: true
         });
+        
+        
         var cube = new THREE.Mesh(geometry, material);
-        cube.position.z=-5;
-
+        
         scene.add(cube);
+        
+        camera.position.z =5 ;
+        
+        var controls = new OrbitControls(camera,renderer.domElement);
+
+        controls.minDistance=3;     // minima distancia de Zoom 
+
+        controls.maxDistance=5;     // maxima distancia de Zoom 
+
+
+        controls.enableDamping = true;   //    efecto de Amortiguación 
+        controls.dampingFactor = .1;     // nivel de Amortiguación
+        
+        controls.maxPolarAngle = Math.PI;    //Angulo de rotacion 
+
+        controls.screenSpacePanning = true;     // Prespectiua click derecho 
+        
+
+
 
         // camera.position.z = 5;
 
+
+        // controls.enableRotate = false;     // habilitar  rotation in out
+
+
+
         
+//  var control = new OrbitControls(camera,renderer.domElement);
 
         
         //animation
-         var i =0;
+        //  var i =0;
+        
         var animate = function(){
             requestAnimationFrame(animate);
 
-            camera.lookAt(newcamera.position);
-            camera.position.x = Math.cos(i) *30
-            camera.position.z = Math.sin(i) *30
+            // camera.lookAt(newcamera.position);
+            // camera.position.x = Math.cos(i) *10
+            // camera.position.z = Math.sin(i) *10
 
-            i  += 0.002;
+                    //  i  += 0.01;
 
             
 
             cube.rotation.x += 0.002;
             cube.rotation.y += 0.002;
 
-            renderer.render(scene, camera);
+            renderer.render(scene, camera );
 
         }
 
